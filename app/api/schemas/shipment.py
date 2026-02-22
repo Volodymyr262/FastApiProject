@@ -14,11 +14,6 @@ class ShipmentCreate(ShipmentBase):
     pass
 
 
-class Shipment(ShipmentBase, table=True):
-    id: int = Field(default=None, primary_key=True)
-    status: ShipmentStatus
-    estimated_delivery: datetime
-
 class ShipmentUpdate(SQLModel):
     content: Optional[str] = None
     destination: Optional[int] = None
