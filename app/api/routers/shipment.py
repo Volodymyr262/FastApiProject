@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from fastapi import APIRouter
 from fastapi import HTTPException, status
 from app.api.schemas.shipment import ShipmentUpdate, ShipmentCreate
@@ -11,7 +13,7 @@ router = APIRouter(prefix='/shipment', tags=['Shipment'])
 
 @router.get("/", response_model=Shipment)
 async def get_shipment(
-        id: int,
+        id: UUID,
         service: ShipmentServiceDep,
         _: SellerDep,
 ):
