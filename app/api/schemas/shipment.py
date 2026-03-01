@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from sqlmodel import SQLModel, Field
-from app.database.models import ShipmentStatus
+from sqlmodel import SQLModel
 
 
 # Base model with shared fields
@@ -9,6 +8,7 @@ class ShipmentBase(SQLModel):
     destination: int
     content: str
     weight: float
+
 
 class ShipmentCreate(ShipmentBase):
     pass

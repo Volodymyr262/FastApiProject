@@ -5,8 +5,10 @@ class BaseSeller(BaseModel):
     name: str
     email: EmailStr
 
+
 class SellerRead(BaseSeller):
     pass
+
 
 class SellerCreate(BaseSeller):
     password: str = Field(max_length=72)

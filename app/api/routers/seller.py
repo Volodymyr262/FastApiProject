@@ -1,32 +1,31 @@
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
-from ..dependencies import SellerServiceDep, get_access_token
+from ..dependencies import SellerServiceDep, get_seller_access_token
 from ..schemas.seller import SellerCreate, SellerRead
 from ...database.redis import add_jti_to_blacklist
 
-router = APIRouter(prefix="/seller", tags=['Seller'])
+router = APIRouter(prefix="/seller", tags=["Seller"])
+
 
 @router.post("/signup", response_model=SellerRead)
 async def register_seller(seller: SellerCreate, service: SellerServiceDep):
     return await service.add(seller)
 
-@router.post('/token')
+
+@router.post("/token")
 async def login_seller(
-        request_form: Annotated[OAuth2PasswordRequestForm ,Depends()],
-        service: SellerServiceDep
+    request_form: Annotated[OAuth2PasswordRequestForm, Depends()],
+    service: SellerServiceDep,
 ):
     token = await service.token(request_form.username, request_form.password)
     return {
-        'access_token': token,
-        'type': 'bearer',
+        "access_token": token,
+        "type": "bearer",
     }
 
-@router.get('/logout')
-async def logout_seller(
-        token_data:Annotated[dict, Depends(get_access_token)]
-):
-    await add_jti_to_blacklist(token_data['jti'])
-    return {
-        "Successfully logged out"
-    }
+
+@router.get("/logout")
+async def logout_seller(token_data: Annotated[dict, Depends(get_seller_access_token)]):
+    await add_jti_to_blacklist(token_data["jti"])
+    return {"Successfully logged out"}

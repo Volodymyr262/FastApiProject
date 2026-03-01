@@ -5,11 +5,14 @@ from fastapi import FastAPI
 
 @asynccontextmanager
 async def lifespan_handler(app: FastAPI):
-    print("Server started...", border_style='green')
+    print("Server started...", border_style="green")
     yield
-    print('...stopped!!!', border_style='red')
+    print("...stopped!!!", border_style="red")
+
+
 app = FastAPI(lifespan=lifespan_handler)
 
-@app.get('/')
+
+@app.get("/")
 def read_the_root():
-    return {'detail': 'server is running...'}
+    return {"detail": "server is running..."}
